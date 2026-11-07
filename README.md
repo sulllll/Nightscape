@@ -4,6 +4,8 @@ A live, endless flight just above a moonlit sea of clouds, rendered in real time
 
 **[Open the live demo](https://weeblabs.github.io/Nightscape/)**
 
+> This fork adds slow, generative ambient music to the sound (see [Sound](#sound)). The live demo above is the original project, without the music.
+
 ![A flight over a sea of clouds at night as the full moon comes out from behind a tall cloud](media/flight.gif)
 
 *The flight in this clip runs at 2.6 times its normal speed, without film grain.*
@@ -186,12 +188,13 @@ Storms far beyond the horizon flicker silently now and then, lighting the sky lo
 
 ### Sound
 
-The page has a soft, endless wind and low thunder that follows each lightning flash. Both are generated in the browser from noise with the Web Audio API, so there are no sound files. Browsers only allow a page to play sound after you interact with it, so sound starts, fading in, on your first click or key press. Until then the panel shows "Click anywhere to start sound".
+The page has slow, generative ambient music, a soft, endless wind and low thunder that follows each lightning flash. All of it is generated in the browser with the Web Audio API, so there are no sound files. Browsers only allow a page to play sound after you interact with it, so sound starts, fading in, on your first click or key press. Until then the panel shows "Click anywhere to start sound". If the browser allows sound without a click, for example Chrome started with `--autoplay-policy=no-user-gesture-required`, sound starts as soon as the page opens.
 
 | Control | Range | Default | What it does |
 | --- | --- | --- | --- |
-| Wind and thunder | On or off | On | Turns all sound on or off. `S` does the same. Turning it off fades the sound out and then pauses audio processing completely |
+| Sound | On or off | On | Turns all sound on or off. `S` does the same. Turning it off fades the sound out and then pauses audio processing completely |
 | Volume | 0% to 100% | 60% | Overall level of all sound |
+| Ambient music | 0% to 100% | 60% | Level of the music. At 0% the music stops making notes |
 | Wind | 0% to 100% | 50% | Level of the wind. It rushes and eases in slow gusts that never repeat exactly |
 | Whistle in the gusts | 0% to 100% | 40% | How strongly the wind whistles. The whistle rises in the stronger gusts, drifting in pitch, and fades in the lulls |
 | Thunder | 0% to 100% | 70% | Level of the thunder |
@@ -220,7 +223,7 @@ All settings are saved per browser in `localStorage`, under these keys:
 | `moonlit-cloud-sea:distant:v1` | All distant-storm settings |
 | `moonlit-cloud-sea:sky:v1` | Twinkle, star reach, shooting star rate and town light brightness |
 | `moonlit-cloud-sea:quality:v1` | Cloud resolution and whether it adjusts automatically |
-| `moonlit-cloud-sea:sound:v1` | Sound on or off, and the five sound levels |
+| `moonlit-cloud-sea:sound:v1` | Sound on or off, and the six sound levels |
 | `moonlit-cloud-sea:tab` | The settings tab you used last |
 
 To return everything to the defaults, clear the site's storage in the browser, or run `localStorage.clear()` in its developer console and reload.
@@ -258,6 +261,8 @@ To return everything to the defaults, clear the site's storage in the browser, o
 Each flash lights the cloud from inside along its channel. Light from a buried channel scatters many times before it escapes, so it fades far more gently than direct moonlight and spreads through the whole tower. A ground strike also lights the land, water and rainy air around its strike point. The visible bolt is drawn at full resolution as a jagged, branching channel, and cloud in front of it hides or veils it.
 
 **Distant storms.** Now and then a storm far beyond the horizon, too far away to hear, flickers. Its light shows as a soft glow low in the sky, sitting behind the cloud layer, so the distant cloud tops stand out dark against it while their thin edges catch a little of the light. A flash is a short train of soft pulses, each lighting a slightly different part of the storm. A storm stays in one direction for a while before another builds elsewhere in view, so flashes repeat from the same place as a real storm's would.
+
+**Music.** The music is an original generative score in the manner of tape-loop ambient. Nine loops each hold one soft note and repeat at their own length, between about 20 and 67 seconds. No two lengths share a common beat, so the notes keep meeting in new combinations and the music never repeats exactly. Five loops are a felt piano: four sine harmonics, struck softly, the upper ones fading first so the tone darkens as it rings. Three are a wordless choir: three slightly detuned saw waves through the formant filters of a soft "oo", "oh" or "aw", swelling in over a few seconds. One is a low drone of root, sub-octave, fifth and octave that rises and falls over a minute. Every eight to twelve minutes all loops move together to a related set of nine notes (D major, B minor, G with a raised fourth or A major), and each loop keeps its place in the set, so it stays in its own register. Some loops stay silent on some passes. Two very slow pitch wobbles, shared by every note, give a tape-like drift. Everything passes through a generated seven-second hall that darkens as it fades, and the piano also echoes from left to right. A timer, not the render loop, schedules notes six seconds ahead, so the music keeps going if a wallpaper app slows the drawing. Each note disconnects its own audio nodes when it ends, so nothing builds up over hours of play. The engine (`createMusic` in `index.html`) needs only an audio context, so it also renders offline for testing.
 
 **Sound.** The wind is pink noise, which has equal energy in every octave, like a steady rush of air. A low-pass filter whose cutoff rises and falls with the gusts shapes it. Two narrow band-pass filters on the same noise give the whistle. Their pitch drifts with the gusts, and they only sound when the wind is strong. The gusts come from three slow swells whose periods never line up, so the pattern never repeats.
 
@@ -378,7 +383,7 @@ Automatic lightning, distant storms and shooting stars are disabled while record
 - **Slower GPUs** run at a reduced cloud resolution, so the clouds look softer.
 - **Distant anvils** can occasionally read as mushroom caps. Stretching them further downwind and thinning their edges would help.
 - **Clouds in the shadow** of a large cumulonimbus can look flat. Skylight relief was strengthened, but there is room for more.
-- **Sound needs a click or key press** before it can start, because browsers block sound on pages the viewer has not interacted with. A wallpaper app that never passes input to the page may never start the sound.
+- **Sound needs a click or key press** before it can start, because browsers block sound on pages the viewer has not interacted with. A wallpaper app that never passes input to the page may never start the sound, unless the browser it uses allows sound without a click.
 
 ## Development history
 
@@ -412,6 +417,7 @@ The scene was built iteratively from a short brief and reference photos of moonl
 26. **Sound.** Synthesised wind with a whistle in the gusts, and delayed thunder after each lightning flash, with controls.
 27. **Distant storms.** Silent flickers of lightning beyond the horizon, with detailed controls.
 28. **Settings tabs.** The settings panel was organised into five tabs.
+29. **Ambient music** (this fork). A slow generative score of felt piano, wordless choir and drone loops, with a level control, and sound that starts without a click where the browser allows it.
 
 ## Files
 
