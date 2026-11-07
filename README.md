@@ -4,7 +4,7 @@ A live, endless flight just above a moonlit sea of clouds, rendered in real time
 
 **[Open the live demo](https://weeblabs.github.io/Nightscape/)**
 
-> This fork adds slow, generative ambient music to the sound (see [Sound](#sound)). The live demo above is the original project, without the music.
+> This fork adds slow, generative ambient music to the sound (see [Sound](#sound)). **[Open this fork's live demo, with the music](https://sulllll.github.io/Nightscape/)**. The live demo above is the original project, without the music.
 
 ![A flight over a sea of clouds at night as the full moon comes out from behind a tall cloud](media/flight.gif)
 
