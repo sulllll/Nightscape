@@ -188,7 +188,7 @@ Storms far beyond the horizon flicker silently now and then, lighting the sky lo
 
 ### Sound
 
-The page has slow, generative ambient music, a soft, endless wind and low thunder that follows each lightning flash. All of it is generated in the browser with the Web Audio API, so there are no sound files. Browsers only allow a page to play sound after you interact with it, so sound starts, fading in, on your first click or key press. Until then the panel shows "Click anywhere to start sound". If the browser allows sound without a click, for example Chrome started with `--autoplay-policy=no-user-gesture-required`, sound starts as soon as the page opens.
+The page has slow generative music, soft wind, low thunder and faint bursts of simulated cockpit radio. Each radio exchange lasts under a second, with at least a minute between exchanges after the first. The radio samples are embedded in the page. Browsers usually wait for your first click or key press before the sound fades in. If the browser allows autoplay, for example Chrome started with `--autoplay-policy=no-user-gesture-required`, sound can start as soon as the page opens.
 
 | Control | Range | Default | What it does |
 | --- | --- | --- | --- |
@@ -200,7 +200,7 @@ The page has slow, generative ambient music, a soft, endless wind and low thunde
 | Thunder | 0% to 100% | 70% | Level of the thunder |
 | Thunder delay | None to ×2 | ×1 | Scales the gap between a flash and its thunder. At ×1 the gap is 0.8 seconds plus about 1.2 seconds for every 100 units of distance, so typically 2 to 5 seconds |
 
-Sound pauses while the page is hidden, for example in a background tab, and resumes when it is shown again.
+Sound pauses while the page is hidden or loses focus, and resumes when you return. Use `?wallpaper` to allow sound on a visible wallpaper without requiring focus.
 
 ### Display
 
@@ -233,6 +233,7 @@ To return everything to the defaults, clear the site's storage in the browser, o
 | URL | Effect |
 | --- | --- |
 | `index.html?noclouds` | Hides the clouds to show the ground on its own, for inspecting the terrain |
+| `index.html?wallpaper` | Allows sound while the page is visible and out of focus. Hidden pages still pause |
 
 ## What is in the scene
 
